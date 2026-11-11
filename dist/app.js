@@ -1,7 +1,7 @@
 const $ = (s) => document.querySelector(s);
 const fmt = new Intl.NumberFormat('en-US');
 const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const boroughColors = ['#e76f51','#2a9d8f','#457b9d','#e9c46a','#8d5a97','#9da8af'];
+const boroughColors = ['#ff6b4a','#00a6a6','#4f7cac','#f4b942','#8e7dbe','#99a5b1'];
 const state = {months:new Set(), boroughs:new Set(), scopes:new Set(), slots:new Set()};
 let records, meta;
 
