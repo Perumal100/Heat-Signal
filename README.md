@@ -40,3 +40,7 @@ Open [http://localhost:8000](http://localhost:8000). Keep the terminal running w
 
 The included workflow deploys the `dist/` folder whenever `main` changes. In GitHub, open **Settings → Pages** and set **Build and deployment** to **GitHub Actions** if it is not already selected.
 
+
+---
+
+Last redesigned for the Information Visualization prototype milestone.
