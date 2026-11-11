@@ -1,0 +1,42 @@
+{
+  "title": "NYC 311 Heat / Hot Water Requests - 2024",
+  "records": 264750,
+  "source": "NYC Open Data - 311 Service Requests from 2020 to Present (erm2-nwe9)",
+  "sourceUrl": "https://data.cityofnewyork.us/d/erm2-nwe9",
+  "query": "complaint_type = 'HEAT/HOT WATER' AND created_date between '2024-01-01T00:00:00' and '2024-12-31T23:59:59'",
+  "fields": [
+    "unique_key",
+    "created_date",
+    "borough",
+    "descriptor",
+    "status",
+    "incident_zip"
+  ],
+  "cleaning": "Kept every calendar-year 2024 HEAT/HOT WATER request, normalized non-five-borough values to Unspecified, and aggregated the full extract by month, borough, reported scope, weekday, hour, and status for responsive browser-side filtering.",
+  "boroughs": [
+    "BRONX",
+    "BROOKLYN",
+    "MANHATTAN",
+    "QUEENS",
+    "STATEN ISLAND",
+    "Unspecified"
+  ],
+  "scopes": [
+    "Entire building",
+    "Apartment only"
+  ],
+  "weekdays": [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun"
+  ],
+  "statuses": [
+    "Closed",
+    "Open"
+  ],
+  "aggregateCells": 17830
+}
