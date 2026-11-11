@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="An interactive investigation of 2024 NYC 311 heat and hot-water reports." />
+  <title>Heat Signal — NYC 311</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div class="masthead-copy">
+        <p class="eyebrow">A 311 FIELD NOTE · NEW YORK CITY · 2024</p>
+        <h1><span>HEAT</span><span>SIGNAL</span></h1>
+        <p class="dek">A closer look at when New Yorkers told 311 that the heat or hot water was out.</p>
+      </div>
+      <aside class="source-card" aria-label="Data source and loaded record count">
+        <div class="source-stamp">LIVE<br>EXTRACT</div>
+        <div><strong id="source-count">Loading request log…</strong><small>NYC Open Data · 311 Service Requests<br>Dataset erm2-nwe9</small></div>
+      </aside>
+      <div class="signal-field" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </header>
+
+    <section class="lens" aria-label="Current selection controls">
+      <div class="lens-label"><p class="eyebrow">YOUR CURRENT LENS</p><span>Click a mark to narrow the story.</span></div>
+      <div id="chips" class="chips" aria-live="polite"></div>
+      <button id="clear" class="clear" type="button">Reset view <span>↗</span></button>
+    </section>
+
+    <section id="kpis" class="kpis" aria-label="Summary metrics"></section>
+
+    <section class="panel overview">
+      <div class="panel-tag">01</div>
+      <div class="panel-head"><div><p class="eyebrow">THE CALENDAR OF COMPLAINTS</p><h2>Cold months, louder signals</h2></div><p>Each vertical strip is a month. The stack shows which boroughs contributed to that month’s total.</p></div>
+      <div id="monthly" class="chart chart-monthly" aria-label="Monthly requests by borough"></div>
+      <div id="borough-legend" class="legend" aria-label="Borough color legend"></div>
+    </section>
+
+    <section class="twoup">
+      <section class="panel compact"><div class="panel-tag">02</div><div class="panel-head"><div><p class="eyebrow">WHERE THE SIGNAL CAME FROM</p><h2>Borough roll call</h2></div><p>Which borough recorded the most 311 reports?</p></div><div id="borough" class="chart bars" aria-label="Requests by borough"></div></section>
+      <section class="panel compact"><div class="panel-tag">03</div><div class="panel-head"><div><p class="eyebrow">HOW PEOPLE DESCRIBED IT</p><h2>One unit or the whole building?</h2></div><p>Reported scope, not a verified inspection outcome.</p></div><div id="scope" class="chart bars" aria-label="Requests by reported scope"></div></section>
+    </section>
+
+    <section class="panel heat-panel">
+      <div class="panel-tag">04</div>
+      <div class="panel-head"><div><p class="eyebrow">WHEN THE CITY SPEAKS UP</p><h2>The weekly rhythm</h2></div><p>Read across for the hour, down for the day. Darker cells mean more reports. Select a cell to filter every view.</p></div>
+      <div id="heatmap" class="heatmap" aria-label="Request count by weekday and hour"></div>
+      <div class="heat-scale"><span>Quieter</span><i></i><span>Busier</span></div>
+    </section>
+
+    <section class="method" aria-labelledby="method-title">
+      <div><p class="eyebrow">READ THIS BEFORE INTERPRETING</p><h2 id="method-title">Reports are a signal,<br>not a diagnosis.</h2></div>
+      <div><p id="method-text">Loading methodology…</p><p class="caution"><strong>Important:</strong> this project maps 311 reports. It does not measure verified heating failures, household prevalence, service quality, or borough risk.</p></div>
+    </section>
+    <footer><span>HEAT SIGNAL / NYC 311 / 2024</span><span>Built for inquiry, not blame.</span></footer>
+  </main>
+  <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
+
