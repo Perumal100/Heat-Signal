@@ -15,8 +15,32 @@
   padding-top: .05em;
 }
 
+.project-links {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.project-links a {
+  border: 1px solid #688090;
+  border-radius: 999px;
+  padding: 6px 9px;
+  color: #ffffff;
+  font: 500 .6rem/1 "DM Mono", monospace;
+  letter-spacing: .04em;
+  text-decoration: none;
+}
+
+.project-links a:last-child {
+  border-color: #f4c95d;
+  color: #f4c95d;
+}
+
+.project-links a:hover { background: #ffffff18; }
+
 @media (max-width: 760px) {
   .hero-copy > .eyebrow { margin-bottom: 18px; }
   .hero h1 { line-height: .86; }
+  .project-links { order: 3; width: 100%; margin: 8px 0 0; }
 }
 
