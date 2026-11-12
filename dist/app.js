@@ -3,6 +3,8 @@ const fmt = new Intl.NumberFormat('en-US');
 const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const boroughColors = ['#ff6b4a','#00a6a6','#4f7cac','#f4b942','#8e7dbe','#99a5b1'];
 const state = {months:new Set(), boroughs:new Set(), scopes:new Set(), slots:new Set()};
+const sharedBorough = new URLSearchParams(window.location.search).get('borough');
+if (/^\d+$/.test(sharedBorough || '') && Number(sharedBorough) < boroughColors.length) state.boroughs.add(Number(sharedBorough));
 let records, meta;
 
 function selected(set, value){return !set.size || set.has(value)}
