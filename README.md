@@ -26,6 +26,8 @@ Once GitHub Pages finishes its first deployment, the dashboard will be available
 
 The dashboard contains an exact compact data cube derived from the **264,750** NYC 311 `HEAT/HOT WATER` requests created in calendar year 2024. The source dataset is [NYC Open Data - 311 Service Requests from 2020 to Present](https://data.cityofnewyork.us/d/erm2-nwe9).
 
+The interactive heatmap is rendered with **D3.js v7**, using D3's data joins and sequential color scale.
+
 The original variables used are request ID, created date, borough, descriptor, status, and incident ZIP code. The prepared browser dataset preserves month, borough, reported scope, weekday, hour, and status. `prepare_data.py` is included for reproducibility and verifies the expected record total before writing the compact files in `dist/data/`.
 
 ## Run locally
