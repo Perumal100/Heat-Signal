@@ -25,3 +25,29 @@ function renderHeatmap(){const slots=countSlots(),max=Math.max(...slots,1);let h
 function render(){renderChips();renderKPIs();renderMonthly();renderBars('#borough',meta.boroughs,countBy(meta.boroughs.length,1,'borough'),'boroughs',boroughColors);renderBars('#scope',meta.scopes,countBy(meta.scopes.length,2,'scope'),'scopes',['#e85d3f','#2a9d8f']);renderHeatmap()}
 Promise.all([fetch('data/requests.json').then(r=>r.json()),fetch('data/meta.json').then(r=>r.json())]).then(([r,m])=>{records=r;meta=m;$('#source-count').textContent=`${fmt.format(meta.records)} requests loaded`;$('#method-text').textContent=`This dashboard loads all ${fmt.format(meta.records)} records in a fixed 2024 extract, then aggregates in the browser when you select a mark. ${meta.cleaning}`;$('#clear').onclick=()=>{Object.values(state).forEach(s=>s.clear());render()};render()}).catch(err=>{$('#source-count').textContent='Data could not load';$('#method-text').textContent=`The prepared request extract is unavailable: ${err.message}`;console.error(err)});
 
+
+/* D3 rendering override: the heatmap uses D3's data join and sequential color scale. */
+function renderHeatmap(){
+  const values=countSlots(), maximum=d3.max(values)||1;
+  const color=d3.scaleSequential().domain([0,maximum]).interpolator(
+    d3.interpolateRgbBasis(['#e7f2ef','#a9e1d7','#4cc6b7','#f4c95d','#ef7656'])
+  );
+  const grid=d3.select('#heatmap').html('').append('div').attr('class','heat-grid');
+  grid.append('span');
+  grid.selectAll('.hour-label').data(d3.range(24)).join('span')
+    .attr('class','hour-label').text(d=>d);
+  meta.weekdays.forEach((day,weekday)=>{
+    grid.append('span').attr('class','heat-label').text(day);
+    grid.selectAll('.d3-day-'+weekday)
+      .data(d3.range(24).map(hour=>({weekday,hour,value:values[weekday*24+hour]})))
+      .join('button')
+      .attr('class',d=>'heatcell d3-day-'+weekday+(state.slots.has(d.weekday+'-'+d.hour)?' is-selected':''))
+      .attr('type','button')
+      .attr('aria-label',d=>day+' '+d.hour+':00, '+fmt.format(d.value)+' requests')
+      .style('background',d=>color(d.value))
+      .on('click',(event,d)=>toggle('slots',d.weekday+'-'+d.hour))
+      .on('mousemove',(event,d)=>tip('<b>'+day+' · '+String(d.hour).padStart(2,'0')+':00</b><br>'+fmt.format(d.value)+' requests',event))
+      .on('mouseleave',hideTip);
+  });
+}
+
