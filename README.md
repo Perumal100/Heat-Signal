@@ -63,4 +63,4 @@ The included workflow deploys the `dist/` folder whenever `main` changes. In Git
 
 ### Cross-filtered dashboard
 
-![Bronx-selected dashboard: active filter and changed KPI total](screenshots/heat-signal-filtered-bronx.jpg)
+![Brooklyn-selected dashboard: active filter and changed KPI total](screenshots/heat-signal-filtered-brooklyn.jpg)
