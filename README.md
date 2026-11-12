@@ -64,3 +64,11 @@ The included workflow deploys the `dist/` folder whenever `main` changes. In Git
 ### Cross-filtered dashboard
 
 ![Brooklyn-selected dashboard: active filter and changed KPI total](screenshots/heat-signal-filtered-brooklyn.jpg)
+
+### Borough and reported-scope comparisons
+
+![Borough and reported-scope comparison views](screenshots/heat-signal-borough-scope.jpg)
+
+### Weekday-hour heatmap and design notes
+
+![D3 weekday-hour heatmap with data and design notes](screenshots/heat-signal-weekday-hour.jpg)
