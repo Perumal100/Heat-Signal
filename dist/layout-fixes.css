@@ -44,3 +44,11 @@
   .project-links { order: 3; width: 100%; margin: 8px 0 0; }
 }
 
+/* Course-review notes: compact evidence without competing with the data story. */
+.evidence { margin-top: 28px; }
+.evidence-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; margin-top:22px; border:1px solid #d7dfda; background:#d7dfda; }
+.evidence-grid article { min-height:132px; padding:20px 22px; background:#fbfcf8; }
+.evidence-grid h3 { margin:0 0 8px; color:#18324c; font:700 .78rem/1.15 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.08em; text-transform:uppercase; }
+.evidence-grid p { margin:0; color:#38515d; font-size:.94rem; line-height:1.55; }
+.evidence-grid strong { color:#17344f; }
+@media (max-width:760px) { .evidence-grid { grid-template-columns:1fr; } .evidence-grid article { min-height:0; padding:18px; } }
