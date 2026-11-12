@@ -54,3 +54,13 @@ Open [http://localhost:8000](http://localhost:8000). Keep the terminal running w
 ## GitHub Pages
 
 The included workflow deploys the `dist/` folder whenever `main` changes. In GitHub, open **Settings → Pages** and set **Build and deployment** to **GitHub Actions** if it is not already selected.
+
+## Submission screenshots
+
+### Opening dashboard
+
+![Opening dashboard: full dataset loaded and monthly-by-borough view](screenshots/heat-signal-overview.jpg)
+
+### Cross-filtered dashboard
+
+![Bronx-selected dashboard: active filter and changed KPI total](screenshots/heat-signal-filtered-bronx.jpg)
