@@ -1,0 +1,2 @@
+# The dashboard is intentionally buildless: this is maintained source, not generated output.
+dist/app.js linguist-detectable=true
