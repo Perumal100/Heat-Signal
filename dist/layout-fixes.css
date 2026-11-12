@@ -1,0 +1,22 @@
+/* Hero title spacing: prevents the large display face from colliding with its kicker. */
+.hero-copy > .eyebrow {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  margin-top: 4px;
+  line-height: .82;
+}
+
+.hero h1 em {
+  display: inline-block;
+  padding-top: .05em;
+}
+
+@media (max-width: 760px) {
+  .hero-copy > .eyebrow { margin-bottom: 18px; }
+  .hero h1 { line-height: .86; }
+}
+
