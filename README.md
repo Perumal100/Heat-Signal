@@ -2,7 +2,7 @@
 
 **Heat Signal** is an interactive field note on NYC 311 reports for heat and hot-water problems during 2024. It is a course prototype for Information Visualization.
 
-> 311 reports are signals from residents, not verified heating failures, household prevalence, or borough risk.
+> 311 reports are signals from residents, household prevalence, or borough risk.
 
 ## Live site
 
