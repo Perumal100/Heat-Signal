@@ -71,3 +71,13 @@
 .heat-legend-item i { width:9px; height:9px; border:1px solid #6c675f; border-radius:2px; }
 .tooltip-muted { color:#c8d5d2; font-size:.9em; }
 
+/* Keep the first analytical panel visible on a standard laptop viewport. */
+.hero-core { min-height:210px; padding:20px 42px 10px; }
+.hero h1 { font-size:clamp(3.2rem,5.7vw,5.2rem); }
+.dek { max-width:410px; margin-top:12px; font-size:.86rem; }
+.hero-note { margin-top:12px; }
+.hero-graphic { width:min(100%,300px); }
+.source-strip { padding-top:10px; padding-bottom:10px; }
+.lens { margin-top:14px; padding-top:11px; padding-bottom:11px; }
+.kpi { min-height:92px; padding-top:17px; padding-bottom:17px; }
+
