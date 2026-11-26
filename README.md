@@ -78,13 +78,12 @@ Then open [http://localhost:8000](http://localhost:8000). Keep the terminal runn
 
 GitHub Pages deploys the `dist/` directory from `main` through `.github/workflows/deploy-pages.yml`. The repository is configured to publish with GitHub Actions.
 
-## Submission screenshots
+## Current dashboard views
 
-![Opening dashboard: full data and monthly view](screenshots/heat-signal-overview.jpg)
+The earlier static gallery has been removed so the README does not present outdated dashboard states. Use these live, current-version views instead:
 
-![Cross-filtered dashboard: Brooklyn selection and changed KPIs](screenshots/heat-signal-filtered-brooklyn.jpg)
-
-![Borough and reported scope comparison views](screenshots/heat-signal-borough-scope.jpg)
-
-![Weekday-hour heatmap and design notes](screenshots/heat-signal-weekday-hour.jpg)
+- [Overview and monthly pattern](https://perumal100.github.io/Heat-Signal/)
+- [Borough concentration view](https://perumal100.github.io/Heat-Signal/#borough)
+- [Reported scope view](https://perumal100.github.io/Heat-Signal/#scope)
+- [Sequential weekday-hour heatmap](https://perumal100.github.io/Heat-Signal/#heatmap)
 
