@@ -96,7 +96,7 @@ function renderMonthly() {
   const counts = Array.from({ length: 12 }, () => Array(meta.boroughs.length).fill(0));
   for (const record of records) if (matches(record, 'month')) counts[record[0] - 1][record[1]] += record[6];
   const max = Math.max(...counts.map(row => row.reduce((sum, value) => sum + value, 0)), 1);
-  const yScale = d3.scaleLinear().domain([0, max]).nice(4);
+  const yScale = d3.scaleLinear().domain([0, max]).nice(6);
   const yMax = yScale.domain()[1];
   const yTicks = yScale.ticks(4);
   const width = 1000, height = 270, left = 42, bottom = 28, top = 10, plotHeight = height - bottom - top;
