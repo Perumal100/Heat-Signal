@@ -7,4 +7,9 @@
 
 **Planned final change:** I will replace the heatmap with a single hue light to dark sequential ramp (for example, D3 `interpolateOranges`) so darker always means more reports. I will also add labelled legend values, such as 0, 5,000, and 10,000 requests, and check the result in greyscale before the final submission.
 
+## Final implementation record
+
+The final dashboard replaces the earlier multi-hue heatmap with a constant-hue orange scale whose lightness alone represents request count. Its legend is generated from the same current-selection weekday-hour counts as the heatmap. Borough colors are used only for borough identity; reported scope uses neutral gray bars. The borough comparison now uses reports per 10,000 renter-occupied homes, with 2023 NYCHVS borough denominators and raw request counts in hover detail. The RQ3 panel now displays a direct, cross-filtered answer naming the leading reported scope and its share. The opening treatment was shortened to reveal the analytical dashboard earlier.
+
 **Feedback I gave to Ashik John:** “Your linked filtering and encoding choices are clear; the biggest improvement before the final would be adding a short on screen data source and cleaning note, including the 1,338 records and derived BMI categories, so viewers can understand the dataset without opening the README.”
+

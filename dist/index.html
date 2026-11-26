@@ -22,7 +22,7 @@
       <div class="hero-topline"><span>NYC 311 · PUBLIC SIGNALS</span><span>2024 / ISSUE 01</span></div>
       <div class="hero-core">
         <div class="hero-copy">
-          <p class="eyebrow">WHEN THE CITY SAYS IT IS COLD</p>
+          <p class="eyebrow">NYC 311 HEAT AND HOT WATER REPORTS</p>
           <h1>Heat<br><em>Signal</em></h1>
           <p class="dek">An interactive reading of heat and hot-water reports filed by New Yorkers across one calendar year.</p>
           <div class="hero-note"><span class="note-line"></span><span>Every mark starts with a 311 report.<br>It is a signal—not a diagnosis.</span></div>
@@ -59,15 +59,15 @@
 
     <div class="section-rule"><span>COMPARE THE PLACES · THEN THE STORIES PEOPLE TOLD</span></div>
     <section class="twoup">
-      <section class="panel compact"><div class="section-number">02</div><div class="panel-head"><div><p class="eyebrow">BY BOROUGH</p><h2>Where reports concentrated</h2></div><p>A common baseline makes the borough totals directly comparable.</p></div><div id="borough" class="chart bars" aria-label="Requests by borough"></div></section>
-      <section class="panel compact"><div class="section-number">03</div><div class="panel-head"><div><p class="eyebrow">BY REPORTED SCOPE</p><h2>Apartment or whole building?</h2></div><p>How a resident described the issue—without assuming an inspection outcome.</p></div><div id="scope" class="chart bars" aria-label="Requests by reported scope"></div></section>
+      <section class="panel compact"><div class="section-number">02</div><div class="panel-head"><div><p class="eyebrow">BY BOROUGH</p><h2>Where reports concentrated per renter home?</h2></div><p>Annual reports per 10,000 renter-occupied homes give each borough a comparable baseline.</p></div><div id="borough" class="chart bars" aria-label="Reports per 10000 renter occupied homes by borough"></div><p class="chart-note">Denominator: 2023 NYC Housing and Vacancy Survey renter-occupied homes. “Unspecified” reports are shown separately as counts.</p></section>
+      <section class="panel compact"><div class="section-number">03</div><div class="panel-head"><div><p class="eyebrow">BY REPORTED SCOPE</p><h2>Apartment or whole building?</h2></div><p>How a resident described the issue, without assuming an inspection outcome.</p></div><div id="scope" class="chart bars" aria-label="Requests by reported scope"></div><p id="scope-answer" class="chart-note" aria-live="polite"></p></section>
     </section>
 
     <section class="panel heat-panel">
       <div class="section-number">04</div>
       <div class="panel-head"><div><p class="eyebrow">THE DAILY RHYTHM</p><h2>What time does the city speak up?</h2></div><p>Read across for hour, down for weekday. Select a square to filter the whole page to that slice.</p></div>
       <div id="heatmap" class="heatmap" aria-label="Request count by weekday and hour"></div>
-      <div class="heat-scale"><span>Lower volume</span><i></i><span>Higher volume</span></div>
+      <div id="heat-scale" class="heat-scale" aria-label="Heatmap color legend"></div>
     </section>
 
     <section class="method" aria-labelledby="method-title"><div><p class="eyebrow">HOW TO READ THIS</p><h2 id="method-title">A report is the beginning<br>of a question.</h2></div><div><p id="method-text">Loading methodology…</p></div></section>
@@ -77,8 +77,8 @@
       <div class="evidence-grid">
         <article><h3>Data prepared</h3><p><strong>264,750</strong> NYC 311 HEAT/HOT WATER reports from calendar year 2024. The complete extract is aggregated only after loading, preserving report counts while keeping filtering responsive.</p></article>
         <article><h3>Dimensions used</h3><p><strong>Quantitative:</strong> report count. <strong>Ordered:</strong> month, weekday, hour. <strong>Nominal:</strong> borough, reported scope, and status.</p></article>
-        <article><h3>Questions + views</h3><p>How volume changes by month and borough; where it concentrates; how residents describe the scope; and when reports arrive during a typical week.</p></article>
-        <article><h3>Encodings + interaction</h3><p>Position and bar length show counts; hue distinguishes borough; the weekday-hour grid uses sequential color for volume. Click any mark to filter every view; hover for exact counts. The heatmap is rendered with D3.js.</p></article>
+        <article><h3>Questions + answers</h3><p>Monthly bars answer when reports rise. The borough view ranks annual reports per renter home. The scope view states the leading description and its share for the current selection, so RQ3 has a visible answer.</p></article>
+        <article><h3>Encodings + interaction</h3><p>Position and bar length show counts or rates; stable hue distinguishes borough; the weekday-hour grid uses a single-hue, light-to-dark scale for counts. Click any mark to filter every view; hover for exact values. The heatmap is rendered with D3.js.</p></article>
       </div>
     </section>
     <footer><span>HEAT SIGNAL · NYC 311 · 2024</span></footer>
@@ -88,3 +88,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+
