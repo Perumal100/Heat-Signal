@@ -154,7 +154,7 @@ function renderScope() {
 function heatColor(value, maximum) {
   const proportion = maximum ? value / maximum : 0;
   // Constant hue and saturation; lightness alone encodes ordered report volume.
-  return d3.hsl(24, 72, 97 - proportion * 57).formatHex();
+  return d3.hsl(24, 0.72, 0.97 - proportion * 0.57).formatHex();
 }
 
 function renderHeatLegend(maximum) {
