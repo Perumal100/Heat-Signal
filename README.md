@@ -6,6 +6,17 @@ Heat Signal is an interactive dashboard about NYC 311 heat and hot water reports
 
 [Open Heat Signal](https://perumal100.github.io/Heat-Signal/)
 
+## Technical stack
+
+| Requirement area | Implementation |
+| --- | --- |
+| Interactive dashboard tool | D3.js with HTML, CSS, and JavaScript |
+| Public data source | NYC Open Data 311 Service Requests from 2020 to Present |
+| Data preparation | Python `prepare_data.py` creates compact browser data files |
+| Coordinated interaction | D3.js event handling and shared filter state |
+| Online hosting | GitHub Pages |
+| Deployment | GitHub Actions workflow publishing the `dist/` directory |
+
 ## Research questions
 
 1. When do heat and hot water reports rise across the year?
