@@ -4,7 +4,7 @@ const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep
 
 // Stable, colorblind-considered borough identity colors (Okabe-Ito inspired).
 // Scope categories intentionally use neutral grays below, never these colors.
-const boroughColors = ['#0072B2', '#E69F00', '#009E73', '#56B4E9', '#CC79A7', '#77838A'];
+const boroughColors = ['#0072B2', '#E69F00', '#009E73', '#332288', '#CC79A7', '#77838A'];
 const scopeColors = ['#344E5C', '#AAB7BE'];
 
 // 2023 NYCHVS renter-occupied units. These denominators contextualize reports;
@@ -29,9 +29,9 @@ function countBy(length, index, omit) {
   for (const record of records) if (matches(record, omit)) counts[record[index]] += record[6];
   return counts;
 }
-function countSlots() {
+function countSlots(omit = 'slot') {
   const counts = Array(168).fill(0);
-  for (const record of records) if (matches(record, 'slot')) counts[record[3] * 24 + record[4]] += record[6];
+  for (const record of records) if (matches(record, omit)) counts[record[3] * 24 + record[4]] += record[6];
   return counts;
 }
 function total() { let value = 0; for (const record of records) if (matches(record)) value += record[6]; return value; }
@@ -70,6 +70,7 @@ function renderChips() {
   $('#chips').innerHTML = labels.length
     ? labels.map(([key, value, label]) => `<button class="chip" type="button" data-remove="${key}" data-value="${value}">${esc(label)} ×</button>`).join('')
     : '<span class="chip">All 2024 requests</span>';
+  if (labels.length) $('#chips').insertAdjacentHTML('beforeend', '<span class="scale-note">Scales adjusted to selection</span>');
   $('#chips').querySelectorAll('[data-remove]').forEach(button => {
     button.onclick = () => { state[button.dataset.remove].delete(Number.isNaN(+button.dataset.value) ? button.dataset.value : +button.dataset.value); render(); };
   });
@@ -80,14 +81,14 @@ function renderKPIs() {
   const all = total();
   const boroughs = countBy(meta.boroughs.length, 1);
   const boroughRates = boroughs.slice(0, 5).map((count, index) => count / renterHomes2023[index] * 10000);
-  const slots = countSlots();
+  const slots = countSlots('');
   const statuses = countBy(meta.statuses.length, 5);
   const closed = statuses.reduce((value, count, index) => value + (meta.statuses[index] === 'Closed' ? count : 0), 0);
   const topBoroughRate = topIndex(boroughRates);
   const peak = topIndex(slots);
   $('#kpis').innerHTML = `<article class="kpi"><b>${fmt.format(all)}</b><span>reports in this view</span></article>
     <article class="kpi"><b>${fmt.format(Math.round(boroughRates[topBoroughRate]))}</b><span>${esc(meta.boroughs[topBoroughRate])} reports per 10,000 renter homes</span></article>
-    <article class="kpi"><b>${meta.weekdays[Math.floor(peak / 24)]} ${String(peak % 24).padStart(2, '0')}:00</b><span>busiest weekday-hour cell</span></article>
+    <article class="kpi"><b>${meta.weekdays[Math.floor(peak / 24)]} ${String(peak % 24).padStart(2, '0')}:00</b><span>${fmt.format(slots[peak])} requests in busiest weekday-hour cell</span></article>
     <article class="kpi"><b>${all ? Math.round(closed / all * 100) : 0}%</b><span>marked closed</span></article>`;
 }
 
@@ -95,18 +96,25 @@ function renderMonthly() {
   const counts = Array.from({ length: 12 }, () => Array(meta.boroughs.length).fill(0));
   for (const record of records) if (matches(record, 'month')) counts[record[0] - 1][record[1]] += record[6];
   const max = Math.max(...counts.map(row => row.reduce((sum, value) => sum + value, 0)), 1);
+  const roughStep = max / 3;
+  const magnitude = 10 ** Math.floor(Math.log10(roughStep));
+  const normalizedStep = roughStep / magnitude;
+  const tickStep = (normalizedStep <= 1 ? 1 : normalizedStep <= 2 ? 2 : normalizedStep <= 5 ? 5 : 10) * magnitude;
+  const yMax = Math.ceil(max / tickStep) * tickStep;
   const width = 1000, height = 270, left = 42, bottom = 28, top = 10, plotHeight = height - bottom - top;
   let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Monthly 2024 report totals stacked by borough">`;
-  for (let index = 0; index < 4; index += 1) {
-    const y = top + plotHeight - (index / 3) * plotHeight;
-    svg += `<line class="gridline" x1="${left}" y1="${y}" x2="${width - 5}" y2="${y}"/><text class="axis-label" x="0" y="${y + 4}">${fmt.format(Math.round(max * index / 3))}</text>`;
+  for (let value = 0; value <= yMax; value += tickStep) {
+    const y = top + plotHeight - value / yMax * plotHeight;
+    svg += `<line class="gridline" x1="${left}" y1="${y}" x2="${width - 5}" y2="${y}"/><text class="axis-label" x="0" y="${y + 4}">${fmt.format(value)}</text>`;
   }
   counts.forEach((row, month) => {
     let used = 0;
     row.forEach((count, borough) => {
-      const barHeight = count / max * plotHeight;
+      const barHeight = count / yMax * plotHeight;
       const y = top + plotHeight - used - barHeight;
-      const selectedClass = state.months.has(month + 1) || state.boroughs.has(borough) ? ' is-selected' : '';
+      const selected = (!state.months.size || state.months.has(month + 1)) && (!state.boroughs.size || state.boroughs.has(borough));
+      const hasDirectSelection = state.months.size || state.boroughs.size;
+      const selectedClass = selected && hasDirectSelection ? ' is-selected' : hasDirectSelection ? ' is-muted' : '';
       svg += `<rect class="bar-segment${selectedClass}" tabindex="0" role="button" aria-label="${monthNames[month]}, ${meta.boroughs[borough]}, ${fmt.format(count)} requests" data-key="months" data-value="${month + 1}" data-tip="<b>${monthNames[month]} ${esc(meta.boroughs[borough])}</b><br>${fmt.format(count)} requests" x="${left + month * 78}" y="${y}" width="53" height="${barHeight}" fill="${boroughColors[borough]}"/>`;
       used += barHeight;
     });
@@ -114,7 +122,7 @@ function renderMonthly() {
   });
   svg += '</svg>';
   $('#monthly').innerHTML = svg;
-  $('#borough-legend').innerHTML = meta.boroughs.map((borough, index) => `<button type="button" data-key="boroughs" data-value="${index}" data-tip="Filter: ${esc(borough)}"><i style="background:${boroughColors[index]}"></i>${esc(borough)}</button>`).join('');
+  $('#borough-legend').innerHTML = meta.boroughs.slice(0, 5).map((borough, index) => `<button class="${state.boroughs.size && !state.boroughs.has(index) ? 'is-muted' : ''}" type="button" data-key="boroughs" data-value="${index}" data-tip="Filter: ${esc(borough)}"><i style="background:${boroughColors[index]}"></i>${esc(borough)}</button>`).join('');
   bindMarks($('#monthly'));
   bindMarks($('#borough-legend'));
 }
@@ -125,10 +133,12 @@ function renderBars(id, labels, values, key, colors, options = {}) {
   labels.forEach((label, index) => {
     const y = 12 + index * 36;
     const barWidth = values[index] / max * (width - left - 58);
-    const selectedClass = state[key].has(index) ? ' is-selected' : '';
+    const dataValue = options.dataValues ? options.dataValues[index] : index;
+    const hasDirectSelection = state[key].size;
+    const selectedClass = hasDirectSelection && state[key].has(dataValue) ? ' is-selected' : hasDirectSelection ? ' is-muted' : '';
     const valueLabel = options.formatValue ? options.formatValue(values[index]) : fmt.format(values[index]);
     const tooltipValue = options.tooltipValue ? options.tooltipValue(values[index], index) : `${fmt.format(values[index])} requests`;
-    svg += `<text class="bar-label" x="${left - 9}" y="${y + 17}" text-anchor="end">${esc(label)}</text><rect class="bar-row${selectedClass}" tabindex="0" role="button" aria-label="${esc(label)}, ${tooltipValue}" data-key="${key}" data-value="${index}" data-tip="<b>${esc(label)}</b><br>${tooltipValue}" x="${left}" y="${y}" width="${barWidth}" height="24" rx="3" fill="${colors[index] || '#73838a'}"/><text class="bar-value" x="${left + barWidth + 7}" y="${y + 17}">${valueLabel}</text>`;
+    svg += `<text class="bar-label" x="${left - 9}" y="${y + 17}" text-anchor="end">${esc(label)}</text><rect class="bar-row${selectedClass}" tabindex="0" role="button" aria-label="${esc(label)}, ${tooltipValue}" data-key="${key}" data-value="${dataValue}" data-tip="<b>${esc(label)}</b><br>${tooltipValue}" x="${left}" y="${y}" width="${barWidth}" height="24" rx="3" fill="${colors[index] || '#73838a'}"/><text class="bar-value" x="${left + barWidth + 7}" y="${y + 17}">${valueLabel}</text>`;
   });
   svg += '</svg>';
   $(id).innerHTML = svg;
@@ -137,19 +147,21 @@ function renderBars(id, labels, values, key, colors, options = {}) {
 
 function renderBoroughRates() {
   const rawCounts = countBy(meta.boroughs.length, 1, 'borough').slice(0, 5);
-  const rates = rawCounts.map((count, index) => count / renterHomes2023[index] * 10000);
-  renderBars('#borough', meta.boroughs.slice(0, 5), rates, 'boroughs', boroughColors.slice(0, 5), {
+  const boroughRows = meta.boroughs.slice(0, 5).map((label, index) => ({ label, index, rate: rawCounts[index] / renterHomes2023[index] * 10000 })).sort((a, b) => b.rate - a.rate);
+  renderBars('#borough', boroughRows.map(row => row.label), boroughRows.map(row => row.rate), 'boroughs', boroughRows.map(row => boroughColors[row.index]), {
+    dataValues: boroughRows.map(row => row.index),
     formatValue: value => value.toFixed(0),
-    tooltipValue: (value, index) => `${value.toFixed(1)} reports per 10,000 renter homes<br>${fmt.format(rawCounts[index])} raw reports`
+    tooltipValue: (value, index) => `${value.toFixed(1)} reports per 10,000 renter homes<br>${fmt.format(rawCounts[boroughRows[index].index])} raw reports`
   });
 }
 
 function renderScope() {
-  const counts = countBy(meta.scopes.length, 2, 'scope');
-  renderBars('#scope', meta.scopes, counts, 'scopes', scopeColors);
-  const top = topIndex(counts), all = counts.reduce((sum, count) => sum + count, 0), percentage = all ? Math.round(counts[top] / all * 100) : 0;
+  const chartCounts = countBy(meta.scopes.length, 2, 'scope');
+  const answerCounts = countBy(meta.scopes.length, 2);
+  renderBars('#scope', meta.scopes, chartCounts, 'scopes', scopeColors);
+  const top = topIndex(answerCounts), all = answerCounts.reduce((sum, count) => sum + count, 0), percentage = all ? Math.round(answerCounts[top] / all * 100) : 0;
   $('#scope-answer').innerHTML = all
-    ? `<strong>Answer to RQ3:</strong> ${esc(meta.scopes[top])} is the more common reported scope in this view (${percentage}% of ${fmt.format(all)} reports). Change month or borough to compare the pattern.`
+    ? `<strong>Reported scope:</strong> ${esc(meta.scopes[top])} is the more common reported scope in this view (${percentage}% of ${fmt.format(all)} reports). Change month or borough to compare the pattern.`
     : 'No reports match this selection.';
 }
 
