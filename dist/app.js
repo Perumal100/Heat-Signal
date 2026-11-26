@@ -79,12 +79,14 @@ function renderChips() {
 function renderKPIs() {
   const all = total();
   const boroughs = countBy(meta.boroughs.length, 1);
+  const boroughRates = boroughs.slice(0, 5).map((count, index) => count / renterHomes2023[index] * 10000);
   const slots = countSlots();
   const statuses = countBy(meta.statuses.length, 5);
   const closed = statuses.reduce((value, count, index) => value + (meta.statuses[index] === 'Closed' ? count : 0), 0);
+  const topBoroughRate = topIndex(boroughRates);
   const peak = topIndex(slots);
   $('#kpis').innerHTML = `<article class="kpi"><b>${fmt.format(all)}</b><span>reports in this view</span></article>
-    <article class="kpi"><b>${esc(meta.boroughs[topIndex(boroughs)])}</b><span>largest raw report total</span></article>
+    <article class="kpi"><b>${fmt.format(Math.round(boroughRates[topBoroughRate]))}</b><span>${esc(meta.boroughs[topBoroughRate])} reports per 10,000 renter homes</span></article>
     <article class="kpi"><b>${meta.weekdays[Math.floor(peak / 24)]} ${String(peak % 24).padStart(2, '0')}:00</b><span>busiest weekday-hour cell</span></article>
     <article class="kpi"><b>${all ? Math.round(closed / all * 100) : 0}%</b><span>marked closed</span></article>`;
 }
