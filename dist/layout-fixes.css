@@ -94,3 +94,15 @@
 @media(max-width:800px) { .mobile-hint { display:inline; } .heat-grid { min-width:610px; grid-template-columns:36px repeat(24,minmax(22px,1fr)); gap:2px; } }
 @media(max-width:650px) { .heat-grid { min-width:540px; grid-template-columns:32px repeat(24,minmax(19px,1fr)); gap:2px; } }
 
+/* Keep the paired cards readable at desktop widths and reveal more analysis on load. */
+.compact .panel-head { grid-template-columns:1fr; gap:10px; }
+.compact .panel-head p:not(.eyebrow) { max-width:430px; }
+.hero-topline { padding:7px 22px; }
+.hero-core { min-height:92px; padding:7px 28px 3px; }
+.hero-copy > .eyebrow { margin-bottom:12px; }
+.hero h1 { font-size:clamp(2.25rem,3.8vw,3.35rem); }
+.dek { margin-top:8px; }
+.hero-note { margin-top:8px; }
+.hero-graphic { width:min(100%,155px); }
+.source-strip { padding-top:6px; padding-bottom:6px; }
+
