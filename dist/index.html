@@ -14,7 +14,7 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="styles.css?v=final-20261126" />
-  <link rel="stylesheet" href="layout-fixes.css?v=final-20261126e" />
+  <link rel="stylesheet" href="layout-fixes.css?v=final-20261126f" />
 </head>
 <body>
   <main class="shell">
@@ -59,13 +59,13 @@
 
     <div class="section-rule"><span>COMPARE THE PLACES · THEN THE STORIES PEOPLE TOLD</span></div>
     <section class="twoup">
-      <section class="panel compact"><div class="section-number">02</div><div class="panel-head"><div><p class="eyebrow">BY BOROUGH</p><h2>Where reports concentrated per renter home?</h2></div><p>Reports per 10,000 renter-occupied homes for the current selection provide a comparable borough rate.</p></div><div id="borough" class="chart bars" aria-label="Reports per 10000 renter occupied homes by borough"></div><p class="chart-note">Denominator: 2023 NYC Housing and Vacancy Survey renter-occupied homes.</p></section>
+      <section class="panel compact"><div class="section-number">02</div><div class="panel-head"><div><p class="eyebrow">BY BOROUGH</p><h2>Where are report rates highest?</h2></div><p>Reports per 10,000 renter-occupied homes for the current selection provide a comparable borough rate.</p></div><div id="borough" class="chart bars" aria-label="Reports per 10000 renter occupied homes by borough"></div><p class="chart-note">Denominator: 2023 NYC Housing and Vacancy Survey renter-occupied homes.</p></section>
       <section class="panel compact"><div class="section-number">03</div><div class="panel-head"><div><p class="eyebrow">BY REPORTED SCOPE</p><h2>Apartment or whole building?</h2></div><p>How a resident described the issue, without assuming an inspection outcome.</p></div><div id="scope" class="chart bars" aria-label="Requests by reported scope"></div><p id="scope-answer" class="chart-note" aria-live="polite"></p></section>
     </section>
 
     <section class="panel heat-panel">
       <div class="section-number">04</div>
-      <div class="panel-head"><div><p class="eyebrow">THE DAILY RHYTHM</p><h2>What time does the city speak up?</h2></div><p>Read across for hour, down for weekday. Select a square to filter the whole page to that slice.</p></div>
+      <div class="panel-head"><div><p class="eyebrow">THE DAILY RHYTHM</p><h2>What time does the city speak up?</h2></div><p>Read across for hour, down for weekday. Select a square to filter the whole page to that slice.<span class="mobile-hint"> On narrow screens, scroll right to see later hours.</span></p></div>
       <div id="heatmap" class="heatmap" aria-label="Request count by weekday and hour"></div>
       <div id="heat-scale" class="heat-scale" aria-label="Heatmap color legend"></div>
     </section>
@@ -77,7 +77,7 @@
       <div class="evidence-grid">
         <article><h3>Data prepared</h3><p><strong>264,750</strong> NYC 311 HEAT/HOT WATER reports from calendar year 2024. The complete extract is aggregated only after loading, preserving report counts while keeping filtering responsive.</p></article>
         <article><h3>Dimensions used</h3><p><strong>Quantitative:</strong> report count. <strong>Ordered:</strong> month, weekday, hour. <strong>Nominal:</strong> borough, reported scope, and status.</p></article>
-        <article><h3>Questions + answers</h3><p>Monthly bars answer when reports rise. The borough view ranks annual reports per renter home. The scope view states the leading description and its share for the current selection, so RQ3 has a visible answer.</p></article>
+        <article><h3>Questions + answers</h3><p>Monthly bars answer when reports rise. The borough view compares report rates per renter home for the current selection. The scope view states the leading description and its share for the current selection, so the reported-scope question has a visible answer.</p></article>
         <article><h3>Encodings + interaction</h3><p>Position and bar length show counts or rates; stable hue distinguishes borough; the weekday-hour grid uses a single-hue, light-to-dark scale for counts. Click any mark to filter every view; hover for exact values. The heatmap is rendered with D3.js.</p></article>
       </div>
     </section>
@@ -85,7 +85,7 @@
   </main>
   <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-  <script src="app.js?v=final-20261126c"></script>
+  <script src="app.js?v=final-20261126f"></script>
 </body>
 </html>
 
