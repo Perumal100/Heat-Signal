@@ -1,83 +1,90 @@
 # Heat Signal
 
-**Heat Signal** is an interactive field note on NYC 311 reports for heat and hot-water problems during 2024. It is a course prototype for Information Visualization.
+Heat Signal is an interactive dashboard about NYC 311 heat and hot water reports created during calendar year 2024. It treats each report as a public signal of a resident's experience, not as a diagnosis of building conditions or household risk.
 
-> 311 reports are signals from residents, household prevalence, or borough risk.
+## Live dashboard
 
-## Live site
+[Open Heat Signal](https://perumal100.github.io/Heat-Signal/)
 
-Once GitHub Pages finishes its first deployment, the dashboard will be available at:
+## Research questions
 
-`https://perumal100.github.io/Heat-Signal/`
+1. When do heat and hot water reports rise across the year?
+2. Which boroughs have the highest report concentration after accounting for renter occupied homes?
+3. Are residents more likely to report an apartment only issue or an entire building issue?
 
-## What it explores
+The dashboard answers these questions directly. The reported scope panel includes a plain language answer to the third question that updates with the active filters.
 
-1. How request volume differs by month and borough.
-2. When reports concentrate by weekday and hour.
-3. How reported scope differs between entire-building and apartment-only reports as the month or borough selection changes.
+## Dashboard views and interaction
 
-## Interaction
+Heat Signal contains four coordinated views plus a shared KPI strip.
 
-- Click a borough label, a month segment, a scope bar, or a weekday-hour cell to add a filter.
-- Hover a mark for its exact request count.
-- Use the filter chips or **Reset view** to remove selections.
+| View | Question answered | Main encodings | Interaction |
+| --- | --- | --- | --- |
+| Monthly reports by borough | When does reporting rise? | Ordered month position, bar length, borough hue | Select a month segment or borough |
+| Reports per 10,000 renter occupied homes | Where are reports concentrated? | Ranked position and bar length | Select a borough |
+| Reported scope | Apartment only or entire building? | Bar length and neutral gray category styling | Select a scope |
+| Weekday by hour heatmap | When during the week do reports arrive? | Ordered weekday and hour position, sequential orange lightness | Select a weekday-hour cell |
 
-## Prototype rubric evidence
-
-| Criterion | Evidence in Heat Signal |
-| --- | --- |
-| Data loaded & prepared | The dashboard loads the full **264,750-record** 2024 NYC 311 HEAT/HOT WATER extract. `prepare_data.py` documents the source query, validates the record total, normalizes non-five-borough values, and creates the compact browser data cube. |
-| Views implemented | Four real-data views address the stated questions: monthly stacked reports by borough, borough totals, reported scope totals, and a weekday-hour heatmap. |
-| Encodings applied | Report count is encoded by bar length and a single-hue sequential heatmap lightness scale; month, weekday, and hour use ordered position; borough uses stable color and direct labels; reported scope uses neutral gray bars. The borough comparison uses reports per 10,000 renter-occupied homes. |
-| Basic interaction & linking | Clicking a month, borough, scope, or weekday-hour cell filters the other views and summary metrics. Hover provides exact counts. The heatmap uses D3.js v7 data joins and a sequential color scale. |
-
-The dashboard's on-page **Data + Design Notes** section repeats this information for a live demo.
-
-## Final dashboard improvements
-
-- **Heatmap:** one orange hue changes only in lightness, with an in-view legend that reports the exact request range for each weekday-hour cell.
-- **Distinct meanings, distinct palettes:** boroughs use stable categorical hues; reported scope uses neutral grays and direct labels.
-- **Fairer borough comparison:** the borough view reports 2024 311 reports per 10,000 renter-occupied homes, using 2023 NYC Housing and Vacancy Survey borough denominators. Raw counts remain available in hover detail. This is context, not a risk measure.
-- **RQ3 is explicit:** the reported-scope panel states the leading scope and share for the current cross-filtered selection.
-- **Above-the-fold analysis:** the opening banner was compressed so the filter lens, KPI strip, and first analytical view are visible earlier.
+Selecting a mark filters every other view and the KPI strip. Hovering reveals exact values. Active filters appear as chips and can be cleared with one control.
 
 ## Data and preparation
 
-The dashboard contains an exact compact data cube derived from the **264,750** NYC 311 `HEAT/HOT WATER` requests created in calendar year 2024. The source dataset is [NYC Open Data - 311 Service Requests from 2020 to Present](https://data.cityofnewyork.us/d/erm2-nwe9). Borough rate denominators are 2023 NYC Housing and Vacancy Survey renter-occupied housing-unit estimates: Bronx 436,800; Brooklyn 727,800; Manhattan 613,300; Queens 481,000; Staten Island 64,590.
+- Source: [NYC Open Data, 311 Service Requests from 2020 to Present](https://data.cityofnewyork.us/d/erm2-nwe9)
+- Scope: 264,750 NYC 311 `HEAT/HOT WATER` requests created in 2024
+- Prepared fields: month, borough, reported scope, weekday, hour, status, and request count
+- Reproducibility: `prepare_data.py` validates the record total, standardizes borough values, and writes the compact data files used by the browser
 
-The interactive heatmap is rendered with **D3.js v7**, using D3's data joins and sequential color scale.
+The borough comparison is normalized as reports per 10,000 renter occupied homes using 2023 NYC Housing and Vacancy Survey estimates. The denominator values are Bronx 436,800, Brooklyn 727,800, Manhattan 613,300, Queens 481,000, and Staten Island 64,590. Raw report counts remain available in hover details.
 
-The original variables used are request ID, created date, borough, descriptor, status, and incident ZIP code. The prepared browser dataset preserves month, borough, reported scope, weekday, hour, and status. `prepare_data.py` is included for reproducibility and verifies the expected record total before writing the compact files in `dist/data/`.
+## Final design decisions
+
+The final dashboard responds to the project review feedback.
+
+- The heatmap uses one orange hue that changes only in lightness. Lighter cells indicate fewer reports and darker cells indicate more reports. Its visible legend uses the same weekday-hour cell count unit as the KPI.
+- Borough identity uses a stable categorical palette. Reported scope uses neutral grays, so the same color is never reused for different meanings.
+- The borough chart is normalized by renter occupied homes instead of presenting population driven raw totals as concentration.
+- The headline area was compressed so the first analytical view appears earlier on a standard laptop screen.
+- The dashboard provides direct labels, a visible heatmap legend, descriptive hover text, keyboard reachable controls, and palettes designed to remain interpretable in grayscale and for common color vision differences.
+- The opening caveat states that a 311 report is a signal, not a diagnosis.
+
+## Visualization principles
+
+- **Expressiveness:** quantitative request volume is represented by length or sequential lightness, ordered time appears in ordered positions, and categorical borough identity uses hue.
+- **Effectiveness:** comparisons use aligned positions and bar lengths rather than area or angle.
+- **Gestalt grouping:** related views are enclosed in clearly separated sections, with proximity and shared headings creating a reading order from annual pattern to borough, scope, and daily rhythm.
+- **Accessibility:** the heatmap does not use a diverging palette, scope is not distinguished by borough colors, and text labels support color independent interpretation.
+
+## Project files
+
+- `dist/`: deployable dashboard files
+- `dist/app.js`: D3 interaction and coordinated filtering
+- `dist/data/`: prepared browser data
+- `docs/FINAL_REFLECTION.md`: final reflection and channel justification
+- `docs/USABILITY_TEST_REPORT_TEMPLATE.md`: structured usability report format
+- `PEER_FEEDBACK_LOG.md`: documented peer feedback
+- `screenshots/`: submission screenshots
 
 ## Run locally
 
-Double-click `START_HEAT_SIGNAL.bat` on Windows, or run:
+On Windows, double click `START_HEAT_SIGNAL.bat`, or run:
 
 ```powershell
 python -m http.server 8000 --directory dist
 ```
 
-Open [http://localhost:8000](http://localhost:8000). Keep the terminal running while you use the dashboard.
+Then open [http://localhost:8000](http://localhost:8000). Keep the terminal running while using the dashboard.
 
-## GitHub Pages
+## Deployment
 
-The included workflow deploys the `dist/` folder whenever `main` changes. In GitHub, open **Settings → Pages** and set **Build and deployment** to **GitHub Actions** if it is not already selected.
+GitHub Pages deploys the `dist/` directory from `main` through `.github/workflows/deploy-pages.yml`. The repository is configured to publish with GitHub Actions.
 
 ## Submission screenshots
 
-### Opening dashboard
+![Opening dashboard: full data and monthly view](screenshots/heat-signal-overview.jpg)
 
-![Opening dashboard: full dataset loaded and monthly-by-borough view](screenshots/heat-signal-overview.jpg)
+![Cross-filtered dashboard: Brooklyn selection and changed KPIs](screenshots/heat-signal-filtered-brooklyn.jpg)
 
-### Cross-filtered dashboard
+![Borough and reported scope comparison views](screenshots/heat-signal-borough-scope.jpg)
 
-![Brooklyn-selected dashboard: active filter and changed KPI total](screenshots/heat-signal-filtered-brooklyn.jpg)
-
-### Borough and reported-scope comparisons
-
-![Borough and reported-scope comparison views](screenshots/heat-signal-borough-scope.jpg)
-
-### Weekday-hour heatmap and design notes
-
-![D3 weekday-hour heatmap with data and design notes](screenshots/heat-signal-weekday-hour.jpg)
+![Weekday-hour heatmap and design notes](screenshots/heat-signal-weekday-hour.jpg)
 
