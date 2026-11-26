@@ -36,16 +36,14 @@ Selecting a mark filters every other view and the KPI strip. Hovering reveals ex
 
 The borough comparison is normalized as reports per 10,000 renter occupied homes using 2023 NYC Housing and Vacancy Survey estimates. The denominator values are Bronx 436,800, Brooklyn 727,800, Manhattan 613,300, Queens 481,000, and Staten Island 64,590. Raw report counts remain available in hover details.
 
-## Final design decisions
+## Visual design and accessibility
 
-The final dashboard responds to the project review feedback.
-
-- The heatmap uses one orange hue that changes only in lightness. Lighter cells indicate fewer reports and darker cells indicate more reports. Its visible legend uses the same weekday-hour cell count unit as the KPI.
-- Borough identity uses a stable categorical palette. Reported scope uses neutral grays, so the same color is never reused for different meanings.
-- The borough chart is normalized by renter occupied homes instead of presenting population driven raw totals as concentration.
-- The headline area was compressed so the first analytical view appears earlier on a standard laptop screen.
-- The dashboard provides direct labels, a visible heatmap legend, descriptive hover text, keyboard reachable controls, and palettes designed to remain interpretable in grayscale and for common color vision differences.
-- The opening caveat states that a 311 report is a signal, not a diagnosis.
+- The heatmap uses a sequential orange scale. Lighter cells indicate fewer reports and darker cells indicate more reports. Its legend and KPI both use requests in one weekday-hour cell.
+- Borough identity uses a stable categorical palette. Reported scope uses neutral grays, so each chart retains its own clear category meaning.
+- Borough concentration is expressed as reports per 10,000 renter occupied homes. The KPI strip identifies the leading normalized rate for the current view.
+- Direct labels, hover details, keyboard reachable controls, active filter chips, and a Clear all control support efficient exploration.
+- The layout groups the annual pattern, borough comparison, reported scope, and daily rhythm into clearly separated reading sections.
+- The opening caveat clarifies that a 311 report is a signal, not a diagnosis.
 
 ## Visualization principles
 
@@ -61,7 +59,7 @@ The final dashboard responds to the project review feedback.
 - `dist/data/`: prepared browser data
 - `docs/FINAL_REFLECTION.md`: final reflection and channel justification
 - `docs/USABILITY_TEST_REPORT_TEMPLATE.md`: structured usability report format
-- `PEER_FEEDBACK_LOG.md`: documented peer feedback
+- `PEER_FEEDBACK_LOG.md`: peer testing notes
 - `screenshots/`: submission screenshots
 
 ## Run locally
@@ -78,12 +76,25 @@ Then open [http://localhost:8000](http://localhost:8000). Keep the terminal runn
 
 GitHub Pages deploys the `dist/` directory from `main` through `.github/workflows/deploy-pages.yml`. The repository is configured to publish with GitHub Actions.
 
-## Current dashboard views
+## Current dashboard screenshots
 
-The earlier static gallery has been removed so the README does not present outdated dashboard states. Use these live, current-version views instead:
+These screenshots show the current published dashboard and its main evidence views.
 
-- [Overview and monthly pattern](https://perumal100.github.io/Heat-Signal/)
-- [Borough concentration view](https://perumal100.github.io/Heat-Signal/#borough)
-- [Reported scope view](https://perumal100.github.io/Heat-Signal/#scope)
-- [Sequential weekday-hour heatmap](https://perumal100.github.io/Heat-Signal/#heatmap)
+### Cross-filtered overview
+
+![Brooklyn selected overview with active filter chips and summary metrics](screenshots/heat-signal-current-overview-filtered.png)
+
+### Monthly reports by borough
+
+![Monthly 2024 reports stacked by borough](screenshots/heat-signal-current-monthly.png)
+
+### Normalized borough comparison and reported scope
+
+![Reports per 10,000 renter occupied homes beside the reported scope answer](screenshots/heat-signal-current-borough-scope.png)
+
+### Sequential weekday-hour heatmap
+
+![Orange sequential heatmap with visible cell count legend](screenshots/heat-signal-current-heatmap.png)
+
+Open the [live dashboard](https://perumal100.github.io/Heat-Signal/) to use the coordinated filters.
 
