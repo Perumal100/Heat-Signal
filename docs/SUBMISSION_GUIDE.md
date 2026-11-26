@@ -36,7 +36,7 @@ Selecting a mark filters the other views and the KPI strip. Hover provides exact
 
 - Confirm the dashboard opens from the GitHub Pages link.
 - Confirm each of the four views filters the others.
-- Complete two real peer sessions and enter observations, quotes, findings, and actions in the usability report.
+- Complete three real peer sessions and enter observations, findings, and actions in the usability report.
 - Record the greyscale and color-vision checks in the report.
 - Export the reflection as one page.
 - Include the hosted dashboard link, source repository link, and final documentation in the course portal.
