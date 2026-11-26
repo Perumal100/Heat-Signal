@@ -84,11 +84,11 @@
 /* Final readability refinements for active selections and the first screen. */
 .is-muted { opacity:.3; }
 .scale-note { align-self:center; color:#657883; font:500 .58rem DM Mono,monospace; letter-spacing:.06em; text-transform:uppercase; }
-.hero-topline { padding:11px 22px; }
-.hero-core { min-height:165px; padding:16px 36px 8px; }
-.hero h1 { font-size:clamp(2.9rem,5.1vw,4.5rem); }
-.hero-graphic { width:min(100%,240px); }
-.source-strip { padding-top:8px; padding-bottom:8px; }
+.hero-topline { padding:9px 22px; }
+.hero-core { min-height:125px; padding:12px 32px 6px; }
+.hero h1 { font-size:clamp(2.6rem,4.6vw,4rem); }
+.hero-graphic { width:min(100%,200px); }
+.source-strip { padding-top:7px; padding-bottom:7px; }
 .heat-grid { grid-template-columns:44px repeat(24,minmax(22px,1fr)); gap:3px; min-width:680px; }
 @media(max-width:760px) { .heat-grid { min-width:620px; grid-template-columns:40px repeat(24,minmax(20px,1fr)); gap:2px; } }
 
